@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gang.mapper.BookMapper">
+
+    <!--增加一本书-->
+    <insert id="addBook" parameterType="books">
+        insert into ssmbuild.books (bookName, bookCounts, detail)
+        values (#{bookName},#{bookCounts},#{detail});
+    </insert>
+
+    <!--删除一本书-->
+    <delete id="deleteBookById" parameterType="int">
+        delete from ssmbuild.books where bookID=#{id};
+    </delete>
+
+    <!--更新一本书-->
+    <update id="updateBook" parameterType="books">
+        update ssmbuild.books
+        set bookName = #{bookName},bookCounts = #{bookCounts},detail = #{detail}
+        where bookID = #{bookID}
+    </update>
+
+    <!--查找一本书-->
+    <select id="queryBookById" parameterType="int" resultType="books">
+        select * from ssmbuild.books where bookID=#{id};
+    </select>
+
+    <!--查找所有书-->
+    <select id="queryAllBooks" resultType="books">
+        select * from ssmbuild.books limit #{curPage},#{pageSize};
+    </select>
+
+    <!--统计所有书籍的数量-->
+    <select id="countAllBooks" resultType="int">
+        select count(*) from ssmbuild.books;
+    </select>
+
+    <!--通过名字查找书籍,模糊查询-->
+    <select id="queryBooksByName" resultType="books">
+        select * from ssmbuild.books
+        <where>
+                <if test="bookName != null and bookName != ''">
+                        bookName like "%"#{bookName}"%"
+                    </if>
+            </where>
+        limit #{curPage},#{pageSize};
+    </select>
+
+    <select id="countBooksByName"  resultType="int">
+        select count(*) from ssmbuild.books
+         where bookName like "%"#{bookName}"%";
+    </select>
+
+
+
+    <!--<?xml version="1.0" encoding="UTF-8" ?>&ndash;&gt;
+    &lt;!&ndash;<!DOCTYPE mapper&ndash;&gt;
+    &lt;!&ndash;        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"&ndash;&gt;
+    &lt;!&ndash;        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">&ndash;&gt;
+    &lt;!&ndash;<mapper namespace="com.gang.mapper.BookMapper">&ndash;&gt;
+    &lt;!&ndash;    &lt;!&ndash;增加一本书&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <insert id="addBook" parameterType="books">&ndash;&gt;
+    &lt;!&ndash;        insert into ssmbuild.books (bookName, bookCounts, detail)&ndash;&gt;
+    &lt;!&ndash;        values (#{bookName},#{bookCounts},#{detail});&ndash;&gt;
+    &lt;!&ndash;    </insert>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;删除一本书&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <delete id="deleteBookById" parameterType="int">&ndash;&gt;
+    &lt;!&ndash;        delete from ssmbuild.books where bookID=#{id};&ndash;&gt;
+    &lt;!&ndash;    </delete>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;更新一本书&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <update id="updateBook" parameterType="books">&ndash;&gt;
+    &lt;!&ndash;        update ssmbuild.books&ndash;&gt;
+    &lt;!&ndash;        set bookName = #{bookName},bookCounts = #{bookCounts},detail = #{detail}&ndash;&gt;
+    &lt;!&ndash;        where bookID = #{bookID}&ndash;&gt;
+    &lt;!&ndash;    </update>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;查找一本书&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <select id="queryBook" parameterType="int" resultType="books">&ndash;&gt;
+    &lt;!&ndash;        select * from ssmbuild.books where bookID=#{id};&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;查找所有书&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <select id="queryAllBooks" resultType="books">&ndash;&gt;
+    &lt;!&ndash;        select * from ssmbuild.books limit #{curPage},#{pageSize};&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;统计所有书籍的数量&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <select id="countAllBooks" resultType="int">&ndash;&gt;
+    &lt;!&ndash;        select count(*) from ssmbuild.books;&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;    &lt;!&ndash;通过名字查找书籍,模糊查询&ndash;&gt;&ndash;&gt;
+    &lt;!&ndash;    <select id="queryBooksByName" resultType="books">&ndash;&gt;
+    &lt;!&ndash;        select * from ssmbuild.books&ndash;&gt;
+    &lt;!&ndash;        <where>&ndash;&gt;
+    &lt;!&ndash;            <if test="bookName != null and bookName != ''">&ndash;&gt;
+    &lt;!&ndash;                bookName like "%"#{bookName}"%"&ndash;&gt;
+    &lt;!&ndash;            </if>&ndash;&gt;
+    &lt;!&ndash;        </where>&ndash;&gt;
+    &lt;!&ndash;        limit #{curPage},#{pageSize};&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;    <select id="countBooksByName"  resultType="int">&ndash;&gt;
+    &lt;!&ndash;        select count(*) from ssmbuild.books&ndash;&gt;
+    &lt;!&ndash;         where bookName like "%"#{bookName}"%";&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;    <select id="queryAllBook" resultType="books">&ndash;&gt;
+    &lt;!&ndash;        select * from ssmbuild.books;&ndash;&gt;
+    &lt;!&ndash;    </select>&ndash;&gt;
+
+    &lt;!&ndash;</mapper>-->
+</mapper>
